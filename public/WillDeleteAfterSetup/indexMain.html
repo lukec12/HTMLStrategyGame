@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>Sigma Alpha Epsilon</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="Lewis Ritz" content="">
+
+
+	<!-- JavaScript 
+	================================================== -->
+	<!-- 
+	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+	-->
+	
+	<!-- JQuery -->
+	<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+
+
+	<script type="text/javascript" src="jquery-calendar/jquery.calendar.js"></script>
+	<link rel="stylesheet" media="screen" href="jquery-calendar/jquery.calendar.css"/>
+	<script type="text/javascript" src="jquery-calendar/events_random.js"></script>
+	<script type="text/javascript" src="js/calendarEvents.js"></script>
+	<script type="text/javascript">
+	$(function(){
+	
+	$calendar = $('#calendar').cal({
+		
+		startdate		: $.cal.date().addDays(1-$.cal.date().format('N')), // Week beginning sunday.
+		
+		allowresize		: false,
+		allowmove		: false,
+		allowselect		: true,
+		allowremove		: false,
+		allownotesedit	: false,
+		
+		//maskdatelabel	: 'D',
+		
+		eventselect : function( uid ){
+			console.log( 'Selected event: '+uid );
+		},
+		
+		eventremove : function( uid ){
+			console.log( 'Removed event: '+uid );
+		},
+		
+		eventnotesedit : function( uid ){
+			console.log( 'Edited Notes for event: '+uid );
+		},
+		
+		// Use the random event generator to build a set of random events.
+		events : randomEvents()
+		
+	});
+	
+	/**
+	 * Set the initial header value.
+	 */
+	$('#date_head').dateRange( $calendar.cal( 'option', 'startdate' ), $calendar.cal( 'option', 'startdate' ).addDays( $calendar.cal('option','daystodisplay')-1 ) );
+	
+	/**
+	 * Button click handler. 
+	 *
+	 * TODO: Turn this into a drop-in module for calendars once we've got the capability to 
+	 * 		 toggle calendar views without reloading. Include 'formatRange' method.
+	 */
+	$('#controls').on('click','button[name]',function(){
+		
+		var $this = $(this), action = $this.attr('name');
+		
+		// If this is already the current state, just exit.
+		if( $this.is('.on') ) return;
+		
+		// Switch to the new state.
+		switch( action ) {
+			
+			/** 
+			 * TODO: For now... ideally you'd be able to toggle between views without reloading.
+			 */
+			case 'day'		: window.location = 'day.html'; break;
+			case 'year'		: window.location = 'year.html'; break;
+			case 'month'	: window.location = 'month.html'; break;
+			
+			case 'prev'		:
+			case 'today'	:
+			case 'next'		:
+				
+				var today	 = $.cal.date(),
+					starting = $calendar.cal('option','startdate'),
+					duration = $calendar.cal('option','daystodisplay'),
+					newstart = starting,
+					newend;
+				
+				switch( action ){	
+					case 'next' : newstart = starting.addDays(duration); $('button[name="today"]').parent().removeClass('on'); break;
+					case 'prev'	: newstart = starting.addDays(0-duration); $('button[name="today"]').parent().removeClass('on'); break;
+					case 'today': newstart = $.cal.date().addDays(1-$.cal.date().format('N')); break;
+				}
+				
+				// Work out the new end date.
+				newend = newstart.addDays(duration-1);
+				 
+				// Set the new startdate.
+				$calendar.cal( 'option','startdate', newstart );
+				
+				if( today >= newstart && today <= newend ) $('button[name="today"]').parent().addClass('on');
+				
+				// Set the new date in the header.
+				$('#date_head').dateRange( newstart, newend )
+			break;
+		}
+	});
+});
+
+/**
+ * jQuery dateRange plugin 1.0.0
+ * Copyright 2012, Digital Fusion
+ * Licensed under the MIT license.
+ * http://teamdf.com/jquery-plugins/license/
+ *
+ * @author		: Sam Sehnert | sam@teamdf.com
+ * @dependancy 	: http://github.com/teamdf/jquery-calendar/ ($.cal.date)
+ *
+ * Formats and displays a minimal text representation of a date range.
+ */
+(function($){
+	
+	// The plugin name. Override if you find namespace collisions.
+	var plugin_name = 'dateRange';
+	
+	// Set the plugin defaults.
+	var defaults = {
+		month		: 'jS',
+		year		: 'jS M',
+		full		: 'jS M Y',
+		separator	: ' - '
+	}
+	
+	/**
+	 * The plugin function which does the date formatting magic.
+	 *
+	 * @param mixed start			: The start of the range. A date object, or a parseable date string.
+	 * @param mixed end				: The end of the range. A date object, or a parseable date string.
+	 * @param object options		: An object containing settings (date formats to print under different conditions).
+	 * 
+	 * @return jQuery Collection;
+	 */
+	$.fn[plugin_name] = function( start, end, options ){
+		
+		// Settings to the defaults.
+		var settings = $.extend({},defaults);
+		
+		// Make sure these are extended date objects.
+		start	= $.cal.date(start);
+		end		= $.cal.date(end);
+		
+		// If options exist, lets merge them
+		// with our default settings.
+		if( options ) $.extend( settings, options )
+		
+		var diffDays	= start.format('Ymd') != end.format('Ymd'),
+			diffMonths	= diffDays ? start.format('Ym') != end.format('Ym') : false,
+			diffYears	= diffMonths ? start.format('Y') != end.format('Y') : false,
+			startFormat	= diffYears || !diffDays ? settings.full : ( diffMonths ? settings.year : settings.month );
+		console.log("about to return date");
+		// Return the formatted date.
+		return this.text(start.format(startFormat)+( diffDays ? settings.separator+end.format(settings.full) : '' ));
+	}
+	
+})(jQuery);
+
+	</script>
+
+
+	<!-- AgileCarousel -->
+	<script src="Agile-Carousel-master/agile_carousel.a1.1.js"></script>
+  	<script>
+	    $.getJSON("Agile-Carousel-master/agile_carousel_data.php", function (data) {
+	        $(document).ready(function () {
+	            $("#basic_slideshow").agile_carousel({
+	                carousel_data: data,
+	                carousel_outer_height: 450,
+	                carousel_height: 220,
+	                slide_height: 400,
+	                carousel_outer_width: 900,
+	                slide_width: 900,
+	                transition_type: "fade",
+	                timer: 4000
+	            });
+	        });
+	    });
+	</script>
+
+	<!-- PageScripts -->
+	<script type="text/javascript">
+		function NavBarRollon(Element){
+			Element.style.color = "#CFB53B";
+		}
+		function NavBarRolloff(Element){
+			Element.style.color = "#7a7a8a";
+		}
+		function ScrollToElement(Element){
+			var heightFromTop;
+			if (Element.innerHTML === "About") { heightFromTop = getHeightFromTopOfPage(Element); }
+			if (Element.innerHTML === "Resources") { heightFromTop = getHeightFromTopOfPage(Element); }
+			if (Element.innerHTML === "Events") { heightFromTop = getHeightFromTopOfPage(Element); }
+			if (Element.innerHTML === "News") { heightFromTop = getHeightFromTopOfPage(Element); }
+			if (Element.innerHTML === "Rush") { heightFromTop = getHeightFromTopOfPage(Element); }
+			if (Element.innerHTML === "Contact") { heightFromTop = getHeightFromTopOfPage(Element); }
+		}
+		function getHeightFromTopOfPage(ele){
+			//var ele = document.getElementById("News");
+			var x = 0;
+			while(ele){
+			   x += ele.offsetTop;
+			   ele = ele.offsetParent;
+			}
+			console.log("Height to top: "+x);
+			x -= 90;
+			console.log("New Height: "+x);
+			//$('html, body').animate({window.scrollTo(0,x)}, 1200);
+
+
+
+			return x;
+				//window.scrollTo(0,x);
+		}
+		function scrollYo(){
+			var x = getHeightFromTopOfPage(Element);
+			window.scrollTo(0,x);
+		}
+		$(document).ready(function() {
+			$("#NavAbout").click(function(){
+				$('html').animate({scrollTop: $("#About").offset().top - 100}, 1200);
+			});
+		});
+		$(document).ready(function() {
+			$("#NavResources").click(function(){
+				$('html').animate({scrollTop: $("#Resources").offset().top - 100}, 1200);
+			});
+		});
+		$(document).ready(function() {
+			$("#NavEvents").click(function(){
+				$('html').animate({scrollTop: $("#Events").offset().top - 100}, 1200);
+			});
+		});
+		$(document).ready(function() {
+			$("#NavNews").click(function(){
+				$('html').animate({scrollTop: $("#News").offset().top - 100}, 1200);
+			});
+		});
+		$(document).ready(function() {
+			$("#NavRush").click(function(){
+				$('html').animate({scrollTop: $("#Rush").offset().top - 100}, 1200);
+			});
+		});
+		$(document).ready(function() {
+			$("#NavContact").click(function(){
+				$('html').animate({scrollTop: $("#Contact").offset().top - 100}, 1200);
+			});
+		});
+		/**
+		$(document).ready(function() {
+			$("#test2").click(function(){
+				//$('html').animate({scrollTop: $("#News").offset().top}, 1200);
+				var elementt = $("#News");
+				$('html').animate({scrollTop: getHeightFromTopOfPage(document.getElementById("News"))}, 1200);
+			});
+		});
+		*/
+	</script>
+
+
+
+
+
+
+	<!-- CSS
+  ================================================== -->
+
+  <!-- AgileCarousel -->
+	<link rel="stylesheet" href="Agile-Carousel-master/agile_carousel.css" type='text/css'>
+
+	<!-- jqueryCalendar -->
+	<style type="text/css">
+	
+	#calendar1{
+	position: absolute;
+	top: 75px;
+	left: 50px;
+	right: 50px;
+	bottom: 50px;
+	border: 1px solid #bbb;
+	}
+
+	#date_head{
+	position: absolute;
+	margin: auto;
+	text-align: center;
+	width: 300px;
+	margin-left: 100px;
+	margin-right: 500px; 
+	}
+
+	#controls{
+	position: absolute;
+	top: 30px;
+	height: 23px;
+	left: 50px;
+	right: 50px;
+	margin: 0;
+	padding: 0;
+	}
+
+	#controls ol{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	border: 1px solid #B3B3B3;
+	border-radius: 2px;
+	overflow: hidden;
+	-moz-background-clip: padding;     /* Firefox 3.6 */
+	-webkit-background-clip: padding;  /* Safari 4? Chrome 6? */
+	background-clip: padding-box;      /* Firefox 4, Safari 5, Opera 10, IE 9 */
+	height: 21px;
+	}
+
+	#controls ol li{
+	display: inline-block;
+	float: left;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	background: #CACACA url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAUCAYAAABMDlehAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADlJREFUeNp0y6sNACAAxNALBs0ArM9QbMEnJKiD4jEvNZXtEiRVEBg2LJgwoEN7pbtlSBBBX44AAwARiCdWebcYiAAAAABJRU5ErkJggg==) repeat-x 0 0; /* Old browsers */
+	text-shadow: rgba(255, 255, 255, 0.5) 0px 1px 0px;
+	color: #333;
+	}
+
+	#controls ol li:hover{
+	background-color: #C0C0C0;
+	color: #000;
+	}
+
+	#controls ol li.on{
+	background: #C4C4C4;
+	color: #555;
+	}
+
+	#controls ol li button{
+	margin: 0;
+	background: transparent;
+	border: 0;
+	border-left: 1px solid #B3B3B3;
+	height: 100%;
+	padding: 0 10px;
+	color: inherit;
+	text-shadow: inherit;
+	cursor: pointer;
+	}
+
+	#controls ol li:first-child button{
+	border-left: 0;
+	}
+
+	#cals{
+	float: left;
+	}
+
+	#nav{
+	//float: right;
+	margin-left: 600px !important; 
+	//width: 165px;
+	display: inline-block;
+	}
+
+	#calendar .ui-cal-dateline, .ui-cal-dateline-fill { width: 963px !important; margin-top: 100px; position: absolute;}
+	#calendar .ui-cal-wrapper { width: 963px; height:400px; margin-top: 100px; position: absolute;}
+	#calendar .ui-cal-timeline { height:400px; margin-top: 100px; position: absolute; }
+	#controls {  margin-top: 50px; margin-left: 50px; position: static; }
+	#OutWrapperLEW { position: absolute; }
+	</style>
+
+
+	<!-- Page Styles -->
+	<style type="text/css">
+		body { font-family:  "proxima-nova", "helvetica neue", helvetica, arial, geneva, sans-serif; margin: 0px; padding: 0px; background-color: #1B1B24; }
+		.NavBar{ width: 100%; height: inherit; position: fixed; z-index: 52; background-color: #1B1B24; padding-bottom: 10px; }
+		.NavBar div { width: 1024px; margin-left: auto; margin-right: auto;}
+		.NavBar .image { width: 60px; display: inline-block; }
+		.NavBar img { height: 60px; width: auto; }
+		.NavBar h1, h3 { color:#7c76b8; display: inline-block; }
+		.NavBar h1 { margin-right: 8px; margin-bottom: 0px; margin-top: 8px; width: 400px; }
+		.NavBar h3 { color:#7a7a8a; margin-right: 10px; margin-bottom: 0px; margin-top: 20px; vertical-align: top; }
+		.NavBar h2 { width: 1200px; color: #CFB53B; font-size: 20px; margin-top: 20px; }
+		.NavBar .NavContainer { height: 70px; width: 540px; margin-left: 0px; margin-right: 0px; display: inline-block; vertical-align: top; }
+		.NavBar .NavContainer .topSpan { height: 30px;}
+		.NavBar .NavContainer .bottomSpan { height: 30px; }
+		.MainBodyContent { width: 1024px; margin-left: auto; margin-right: auto; }
+		.MainBodyContent .bufferTop { height: 110px; width: 100%; }
+		.MainBodyContent .ImageDisplay .slideshow_wrapper .slideshow .agile_carousel { margin-left: auto; margin-right: auto; }
+		.MainBodyContent .ImageDisplay .slideshow_wrapper .slideshow .agile_carousel .slides .slide_inner .photo_link img { height: 400px;	width:auto }
+		.MainBodyContent .ImageDisplay .slideshow_wrapper .slideshow .agile_carousel .slides .slide_inner .photo_link { display: table; margin: 0 auto; }
+		.MainBodyContent .PageTitle { background-color: #464368; padding-top: 10px; padding-bottom:  10px; }
+		.MainBodyContent .PageTitle h2 { color: #FFF; margin:0px; margin-left: 20px; font-size: 20px; font-weight: 400; }
+		.MainBodyContent .PageContent h3, h4 { color: #7a7a8a; }
+		#Events { margin-bottom: 550px; }
+		.CalendarJQ { font-family: sans-serif; font-size: 10px; color: #7a7a8a;}
+	</style>
+
+	<!-- Favicons
+  ================================================== -->
+	<link rel="icon" type="image/png" href="images/LonerganPump/LPSfavicon.ico">
+
+
+
+
+</head>
+
+<body>
+  	<div class="NavBar">
+  		<div>
+  			<div class="image">
+  				<img src="images/Fleur-de-lis.gif">
+  			</div>
+			<h1>West Chester University Of Pennsylvania</h1>
+			<div class="NavContainer">
+				<div class="topSpan">
+					
+					<h3 id="NavAbout" onmouseover="NavBarRollon(this)" onmouseout="NavBarRolloff(this)">About</h3>
+					<h3 id="NavResources" onmouseover="NavBarRollon(this)" onmouseout="NavBarRolloff(this)">Resources</h3>
+					<h3 id="NavEvents" onmouseover="NavBarRollon(this)" onmouseout="NavBarRolloff(this)">Events</h3>
+					<h3 id="NavNews" onmouseover="NavBarRollon(this)" onmouseout="NavBarRolloff(this)">News</h3>
+					<h3 id="NavRush" onmouseover="NavBarRollon(this)" onmouseout="NavBarRolloff(this)">Rush</h3>
+					<h3 id="NavContact" onmouseover="NavBarRollon(this)" onmouseout="NavBarRolloff(this)">Contact</h3>
+				</div>
+				<div class="bottomSpan">
+					<h2>Sigma Alpha Epsilon</h2>
+				</div>
+			</div>
+		</div>
+  	</div>
+  	<div class="MainBodyContent">
+  		<div class="bufferTop"></div>
+  		<div class="ImageDisplay">
+  			<div class="slideshow_wrapper">  
+			     <div class="slideshow" id="basic_slideshow">
+
+			     </div>
+			 </div>
+	  	</div>
+  		<div class="PageTitle" id="About"><h2>About</h2></div>
+	  	<div class="PageContent">
+	  		<h3>
+	  			HEADQUARTERED IN EVANSTON, IL, SIGMA ALPHA EPSILON WAS FOUNDED ON MARCH 9TH, 1856 AT THE UNIVERSITY OF ALABAMA TUSCALOOSA.  IT'S FOUNDERS WERE NOBLE LESLIE DEVOTIE, NATHAN ELAMS COCKRELL, JOHN BARRET RUDOLPH, JOHN WEBB KERR, SAMUEL MARION DENNIS, WADE HAMPTON FOSTER, ABNER EDWIN PATTON, AND THOMAS CHAPPELL COOK. UNDER THE DIRECTION OF DEVOTIE, THE RITUAL, SECRET HAND GRIP, AND THE NAME WAS CREATED. TODAY, OVER 307,000 BROTHERS HAVE BEEN INITIATED INTO OUR REALM. WITH OVER 228 CHAPTERS NATION WIDE, THERE IS ROUGHLY 14,000 CURRENT UNDERGRADUATE BROTHERS WITH OVER 190,000 LIVING ALUMNI AS WELL. SIGMA ALPHA EPSILON IS THE BIGGEST FRATERNITY CURRENTLY IN THE NATION.
+	  		</h3>
+	  		<h4>
+	  			The Pennsylvania Tau Gamma Chapter of Sigma Alpha Epsilon began in the early fall of 2002 with the determination of one young man. Greg Brunner rounded up close to 40 gentlemen in the basement of Killinger Hall and began drafting what would be the original by-laws of the 10th fraternity at West Chester University. Greg Brunner, Brad Sorrells, and Matt Barraveccio were named president, vice president, and treasurer, respectively. The founding fathers yearned for a strong commitment to civility, loyalty, scholarship, and brotherhood and swore to not succumb to the pitfalls of other Greek Organizations.
+			</h4> 
+
+			<h4>
+				Pennsylvania Tau Gamma grew in popularity very quickly; they initiated the inaugural Alpha pledge class, consisting of 13 men, in Spring of 2003. The men of SAE continue striving to be academic, athletic, and respected role models at West Chester University. In April of 2004, the Pennsylvania Tau Gamma received their charter from the Sigma Alpha Epsilon Nationals and became the newest chapter at West Chester University. Subsequently, they were awarded the Greek Cup on campus in 2004 and Greg Brunner was named President of the Year. Currently, the Pennsylvania Tau Gamma has 17 initiated pledge classes, and is recruiting a rapidly growing pool of potential members.
+			</h4>
+	  	</div>
+  		<div class="PageTitle" id="Resources"><h2>Resources</h2></div>
+  		<div class="ImageDisplay">
+	  	</div>
+	  	<div class="PageContent">
+	  		<h3>
+	  			Coming Soon...
+	  		</h3>
+	  	</div>
+  		<div class="PageTitle" id="Events"><h2>Events</h2>
+	  		<div class="CalendarJQ" id="OutWrapperLEW">
+				<div>
+					<div id="controls">
+						<!--
+						<ol id="cals">
+							<li><button name="day">Day</button></li>
+							<li class="on"><button name="week">Week</button></li>
+							<li><button name="month">Month</button></li>
+							<li><button name="year">Year</button></li>
+						</ol>
+						-->
+						<h1 id="date_head"></h1>
+						<ol id="nav">
+							<li><button name="prev">Previous</button></li>
+							<li class="on"><button name="today">Today</button></li>
+							<li><button name="next">Next</button></li>
+						</ol>
+					</div>
+					<!-- <div id="calendar1"></div> -->
+					<div id="calendar"></div>
+				</div>
+			</div>
+		</div>
+  		<div class="PageTitle" id="News"><h2>News</h2></div>
+  		<div class="ImageDisplay">
+	  	</div>
+	  	<div class="PageContent">
+	  		<h3>
+	  			<iframe src="https://www.google.com/calendar/embed?src=emuinacan2%40gmail.com&ctz=America/New_York" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+	  		</h3>
+	  	</div>
+  		<div class="PageTitle" id="Rush"><h2>Rush</h2></div>
+  		<div class="ImageDisplay">
+	  	</div>
+	  	<div class="PageContent">
+	  		<h3>
+	  			Coming Soon...
+	  		</h3>
+	  	</div>
+	  	<div class="PageTitle" id="Contact"><h2>Contact</h2></div>
+  		<div class="ImageDisplay">
+	  	</div>
+	  	<div class="PageContent">
+	  		<h3>
+	  			Coming Soon...
+	  		</h3>
+	  	</div>
+	</div>
+</body>
+
+</html>

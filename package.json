@@ -1,0 +1,15 @@
+{
+  "name": "sae",
+  "version": "0.0.0",
+  "description": "Sigma Alpha Epsilon West Chester Website",
+  "main": "fileServer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lewis Ritz",
+  "license": "ISC",
+  "dependencies": {
+    "logfmt": "~0.21.0",
+    "express": "~3.4.8"
+  }
+}

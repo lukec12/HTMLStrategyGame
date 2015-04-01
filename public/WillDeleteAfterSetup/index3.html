@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>Sigma Alpha Epsilon</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="Lewis Ritz" content="">
+
+	<!-- CSS
+  ================================================== -->
+  	<!-- Fortorama --><!--
+  	<link  href="http://fotorama.s3.amazonaws.com/4.4.8/fotorama.css" rel="stylesheet">  -->
+
+  	<!-- Page Styles -->
+  	<!--
+	<link href="css/styles.css" rel="stylesheet" type="text/css">
+	-->
+
+  	<!-- PageResizing -->
+  	<!-- 
+  	<link href="css/skeleton.css" rel="stylesheet" type="text/css">
+	-->
+
+	<!-- Skeleton -->
+	<!-- 
+	<link rel="stylesheet" href="/css/skeleton.css">
+	"proxima-nova", "helvetica neue", helvetica, arial, geneva, sans-serif
+	green: #a6fa62;
+	royal purple: #6B3FA0;
+	old gold: #CFB53B;
+	-->
+
+
+	<!-- AgileCarousel -->
+	<link rel="stylesheet" href="Agile-Carousel-master/agile_carousel.css" type='text/css'>
+
+
+
+
+	<style type="text/css">
+		body { font-family:  "proxima-nova", "helvetica neue", helvetica, arial, geneva, sans-serif; margin: 0px; padding: 0px; background-color: #1B1B24; }
+		.NavBar{ width: 100%; height: inherit; position: fixed; z-index: 52; background-color: #1B1B24; padding-bottom: 10px; }
+		.NavBar div { width: 1024px; margin-left: auto; margin-right: auto;}
+		.NavBar .image { width: 60px; display: inline-block; }
+		.NavBar img { height: 60px; width: auto; }
+		.NavBar h1, h3 { color:#7c76b8; display: inline-block; }
+		.NavBar h1 { margin-right: 8px; margin-bottom: 0px; margin-top: 8px; width: 400px; }
+		.NavBar h3 { color:#7a7a8a; margin-right: 10px; margin-bottom: 0px; margin-top: 20px; vertical-align: top; }
+		.NavBar h2 { width: 1200px; color: #CFB53B; font-size: 20px; margin-top: 20px; }
+		.NavBar .NavContainer { height: 70px; width: 540px; margin-left: 0px; margin-right: 0px; display: inline-block; vertical-align: top; }
+		.NavBar .NavContainer .topSpan { height: 30px;}
+		.NavBar .NavContainer .bottomSpan { height: 30px; }
+		.MainBodyContent { width: 1024px; margin-left: auto; margin-right: auto; }
+		.MainBodyContent .bufferTop { height: 110px; width: 100%; }
+		.MainBodyContent .ImageDisplay .slideshow_wrapper .slideshow .agile_carousel { margin-left: auto; margin-right: auto; }
+		.MainBodyContent .ImageDisplay .slideshow_wrapper .slideshow .agile_carousel .slides .slide_inner .photo_link img { height: 400px;	width:auto }
+		.MainBodyContent .ImageDisplay .slideshow_wrapper .slideshow .agile_carousel .slides .slide_inner .photo_link { display: table; margin: 0 auto; }
+		.MainBodyContent .PageTitle { background-color: #464368; padding-top: 10px; padding-bottom:  10px; }
+		.MainBodyContent .PageTitle h2 { color: #FFF; margin:0px; margin-left: 20px; font-size: 20px; font-weight: 400; }
+		.MainBodyContent .PageContent h3, h4 { color: #7a7a8a; }
+
+	</style>
+
+	<!-- JavaScript
+  ================================================== -->	
+  	<!-- JQuery --><!--
+  	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script> -->
+  	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+  	<!-- AgileCarousel -->
+  	<script src="Agile-Carousel-master/agile_carousel.a1.1.js"></script>
+  	<script>
+	    $.getJSON("Agile-Carousel-master/agile_carousel_data.php", function (data) {
+	        $(document).ready(function () {
+	            $("#basic_slideshow").agile_carousel({
+	                carousel_data: data,
+	                carousel_outer_height: 450,
+	                carousel_height: 220,
+	                slide_height: 400,
+	                carousel_outer_width: 900,
+	                slide_width: 900,
+	                transition_type: "fade",
+	                timer: 4000
+	            });
+	        });
+	    });
+	</script>
+
+	<!-- jqueryCalendar -->
+	<script src="jquery-calendar/jquery.calendar.js"></script>
+	<link rel="stylesheet" href="jquery-calendar/jquery.calendar.css" type='text/css'>
+	
+	<script type="text/javascript">
+		$(function(){
+			
+			$calendar = $('#calendar').cal({
+				
+				monthstodisplay	: 1,
+				
+				allowmove		: true,
+				allowselect		: true,
+				allowremove		: true,
+				allownotesedit	: true,
+				
+				eventselect : function( uid ){
+					console.log( 'Selected event: '+uid );
+				},
+				
+				eventremove : function( uid ){
+					console.log( 'Removed event: '+uid );
+				},
+				
+				eventnotesedit : function( uid ){
+					console.log( 'Edited Notes for event: '+uid );
+				},
+				
+				events : randomEvents(50,100,'@cal1',-90,90)
+				
+			});
+			
+			/**
+			 * Set the initial header value.
+			 */
+			$('#date_head').text($.cal.date().format('F Y'));
+			
+			/**
+			 * Button click handler. 
+			 *
+			 * TODO: Turn this into a drop-in module for calendars once we've got the capability to 
+			 * 		 toggle calendar views without reloading. Include 'formatRange' method.
+			 */
+			$('#controls').on('click','button[name]',function(){
+				
+				var $this = $(this), action = $this.attr('name');
+				
+				// If this is already the current state, just exit.
+				if( $this.is('.on') ) return;
+				
+				// Switch to the new state.
+				switch( action ) {
+					
+					/** 
+					 * TODO: For now... ideally you'd be able to toggle between views without reloading.
+					 */
+					case 'day'		: window.location = 'day.html'; break;
+					case 'year'		: window.location = 'year.html'; break;
+					case 'week'		: window.location = 'week.html'; break;
+					
+					case 'prev'		:
+					case 'today'	:
+					case 'next'		:
+						
+						var today	 = $.cal.date(),
+							starting = $calendar.cal('option','startdate'),
+							duration = $calendar.cal('option','monthstodisplay'),
+							newstart = starting,
+							newend;
+						
+						switch( action ){	
+							case 'next' : newstart = starting.addMonths(duration); $('button[name="today"]').parent().removeClass('on'); break;
+							case 'prev'	: newstart = starting.addMonths(0-duration); $('button[name="today"]').parent().removeClass('on'); break;
+							case 'today': newstart = $.cal.date().addDays(1-$.cal.date().format('d')); break;
+						}
+						
+						// Work out the new end date.
+						newend = newstart.addDays(duration-1);
+						 
+						// Set the new startdate.
+						$calendar.cal( 'option','startdate', newstart );
+						
+						if( today >= newstart && today <= newend ) $('button[name="today"]').parent().addClass('on');
+						
+						// Set the new date in the header.
+						$('#date_head').text( newstart.format('F Y') )
+					break;
+				}
+			});
+		});
+
+	</script>
+
+
+  	<!--
+  	<script src="js/javascript.js" type="text/javascript"></script>
+  	<script src="http://www.lewisritz.com/SubWebsitesOrPages/DorneyvilleBeverage/dbStuff/dataArrays.php" type="text/javascript"></script>
+	-->
+  	<!-- Fortorama -->
+  	<!-- <script src="http://fotorama.s3.amazonaws.com/4.4.8/fotorama.js"></script> -->
+
+  	<!-- NavBar -->
+  	<!--
+  	<script type="text/javascript" src="../js/scriptLonerganPump.js"></script>
+	-->
+
+	<!-- jqueryCalendar -->
+	<script type="text/javascript">
+		function NavBarRollon(Element){
+			Element.style.color = "#CFB53B";
+		}
+		function NavBarRolloff(Element){
+			Element.style.color = "#7a7a8a";
+		}
+		function ScrollToElement(Element){
+			var heightFromTop;
+			if (Element.innerHTML === "About") { heightFromTop = getHeightFromTopOfPage(Element); }
+			if (Element.innerHTML === "Resources") { heightFromTop = getHeightFromTopOfPage(Element); }
+			if (Element.innerHTML === "Events") { heightFromTop = getHeightFromTopOfPage(Element); }
+			if (Element.innerHTML === "News") { heightFromTop = getHeightFromTopOfPage(Element); }
+			if (Element.innerHTML === "Rush") { heightFromTop = getHeightFromTopOfPage(Element); }
+			if (Element.innerHTML === "Contact") { heightFromTop = getHeightFromTopOfPage(Element); }
+		}
+		function getHeightFromTopOfPage(ele){
+			//var ele = document.getElementById("News");
+			var x = 0;
+			while(ele){
+			   x += ele.offsetTop;
+			   ele = ele.offsetParent;
+			}
+			console.log("Height to top: "+x);
+			x -= 90;
+			console.log("New Height: "+x);
+			//$('html, body').animate({window.scrollTo(0,x)}, 1200);
+
+
+
+			return x;
+				//window.scrollTo(0,x);
+		}
+		function scrollYo(){
+			var x = getHeightFromTopOfPage(Element);
+			window.scrollTo(0,x);
+		}
+		$(document).ready(function() {
+			$("#NavAbout").click(function(){
+				$('html').animate({scrollTop: $("#About").offset().top - 100}, 1200);
+			});
+		});
+		$(document).ready(function() {
+			$("#NavResources").click(function(){
+				$('html').animate({scrollTop: $("#Resources").offset().top - 100}, 1200);
+			});
+		});
+		$(document).ready(function() {
+			$("#NavEvents").click(function(){
+				$('html').animate({scrollTop: $("#Events").offset().top - 100}, 1200);
+			});
+		});
+		$(document).ready(function() {
+			$("#NavNews").click(function(){
+				$('html').animate({scrollTop: $("#News").offset().top - 100}, 1200);
+			});
+		});
+		$(document).ready(function() {
+			$("#NavRush").click(function(){
+				$('html').animate({scrollTop: $("#Rush").offset().top - 100}, 1200);
+			});
+		});
+		$(document).ready(function() {
+			$("#NavContact").click(function(){
+				$('html').animate({scrollTop: $("#Contact").offset().top - 100}, 1200);
+			});
+		});
+		/**
+		$(document).ready(function() {
+			$("#test2").click(function(){
+				//$('html').animate({scrollTop: $("#News").offset().top}, 1200);
+				var elementt = $("#News");
+				$('html').animate({scrollTop: getHeightFromTopOfPage(document.getElementById("News"))}, 1200);
+			});
+		});
+		*/
+	</script>
+
+
+
+	<style type="text/css">	
+		#calendar{
+		position: absolute;
+		top: 75px;
+		left: 50px;
+		right: 50px;
+		bottom: 50px;
+		border: 1px solid #bbb;
+		}
+
+		#date_head{
+		position: absolute;
+		right: 200px;
+		margin: auto;
+		text-align: center;
+		left: 200px;
+		}
+
+		#controls{
+		position: absolute;
+		top: 30px;
+		height: 23px;
+		left: 50px;
+		right: 50px;
+		margin: 0;
+		padding: 0;
+		}
+
+		#controls ol{
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		border: 1px solid #B3B3B3;
+		border-radius: 2px;
+		overflow: hidden;
+		-moz-background-clip: padding;     /* Firefox 3.6 */
+		-webkit-background-clip: padding;  /* Safari 4? Chrome 6? */
+		background-clip: padding-box;      /* Firefox 4, Safari 5, Opera 10, IE 9 */
+		height: 21px;
+		}
+
+		#controls ol li{
+		display: inline-block;
+		float: left;
+		height: 100%;
+		padding: 0;
+		margin: 0;
+		border: 0;
+		background: #CACACA url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAUCAYAAABMDlehAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADlJREFUeNp0y6sNACAAxNALBs0ArM9QbMEnJKiD4jEvNZXtEiRVEBg2LJgwoEN7pbtlSBBBX44AAwARiCdWebcYiAAAAABJRU5ErkJggg==) repeat-x 0 0; /* Old browsers */
+		text-shadow: rgba(255, 255, 255, 0.5) 0px 1px 0px;
+		color: #333;
+		}
+
+		#controls ol li:hover{
+		background-color: #C0C0C0;
+		color: #000;
+		}
+
+		#controls ol li.on{
+		background: #C4C4C4;
+		color: #555;
+		}
+
+		#controls ol li button{
+		margin: 0;
+		background: transparent;
+		border: 0;
+		border-left: 1px solid #B3B3B3;
+		height: 100%;
+		padding: 0 10px;
+		color: inherit;
+		text-shadow: inherit;
+		cursor: pointer;
+		}
+
+		#controls ol li:first-child button{
+		border-left: 0;
+		}
+
+		#cals{
+		float: left;
+		}
+
+		#nav{
+		float: right;
+		}
+
+	</style>
+	<!--
+
+	<!-- Carousel -->
+	<!-- <script type="text/javascript" src="carousel.js"></script> -->
+
+	<!-- RollOver Menu -->
+	<!-- <script type="text/javascript" src="rollover.js"></script> -->
+
+	<!-- Page Functions -->
+	<!-- <script type="text/javascript" src="js/functions.js"></script> -->
+
+	<!-- Favicons
+  ================================================== -->
+	<link rel="icon" type="image/png" href="images/LonerganPump/LPSfavicon.ico">
+
+</head>
+<!-- <body style="margin-left:0px; margin-right:0px; background-color:#000;"> 
+onclick="ScrollToElement(this)"
+agile_carousel.a1.1.min.js
+-->
+
+<body>
+	<!-- Primary Page Layout
+  ================================================== -->
+	  		<div id="controls">
+				<ol id="cals">
+					<li><button name="day">Day</button></li>
+					<li><button name="week">Week</button></li>
+					<li class="on"><button name="month">Month</button></li>
+					<li><button name="year">Year</button></li>
+				</ol>
+				<h1 id="date_head"></h1>
+				<ol id="nav">
+					<li><button name="prev">Previous</button></li>
+					<li class="on"><button name="today">Today</button></li>
+					<li><button name="next">Next</button></li>
+				</ol>
+			</div>
+			<div id="calendar"></div>
+</body>
+</html>

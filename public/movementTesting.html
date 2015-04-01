@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+
+html { height: 100%; width: 100%; }
+body { height: 100%; width: 100%; background-color: black; }
+.person {
+	height: 20px; width: 20px;
+	/*background-color: red;*/
+	-webkit-animation-name: movement;
+	-webkit-animation-duration: 4s;
+	position: absolute;
+}
+.person img {
+	width: 100px;
+}
+
+</style>
+<script>
+
+var path = 0;
+var newPath = 0;
+var newDistancePerUnitTime = 2;
+
+var xIncrement; var yIncrement; var xMax; var yMax; var slopeAngle;
+var testMovement = function(totalXdist, thePath){
+	var theGuy = document.getElementById("thePerson");
+	var rect = theGuy.getBoundingClientRect();
+	//console.log(slopeAngle+" : "+xMax);
+	console.log(yMax+" : "+totalXdist);
+	//console.log(xIncrement+" : "+yIncrement);
+	//console.log(Math.abs(slopeAngle));
+	if (totalXdist < xMax && thePath === newPath && Math.abs(slopeAngle) < 1){
+		theGuy.style.left = (rect.left + xIncrement)+'px';
+		theGuy.style.top = (rect.top + yIncrement)+'px';
+		totalXdist += Math.abs(xIncrement);
+		setTimeout(testMovement, 10, totalXdist, thePath);
+	}
+	if (totalXdist < yMax && (thePath === newPath) && (Math.abs(slopeAngle) >= 1)){
+		theGuy.style.left = (rect.left + xIncrement)+'px';
+		theGuy.style.top = (rect.top + yIncrement)+'px';
+		totalXdist += Math.abs(yIncrement);
+		setTimeout(testMovement, 10, totalXdist, thePath);
+	}
+
+}
+
+var newMove = function(e) {
+	newPath++;
+	totalXdist = 0;
+	var theGuy = document.getElementById("thePerson");
+	var rect = theGuy.getBoundingClientRect();
+	var rise = (e.clientY-rect.top);
+	var run = e.clientX-rect.left;
+	var slope = rise/run;
+	slopeAngle = Math.atan(slope);
+	xMax = Math.abs(e.clientX - rect.left);
+	yMax = Math.abs(e.clientY-rect.top);
+	if (run < 0) { 
+		xIncrement = Math.cos(slopeAngle)*newDistancePerUnitTime*(-1); 
+		yIncrement = Math.sin(slopeAngle)*newDistancePerUnitTime*(-1);
+		xMax += 50;
+	}
+	else { xIncrement = Math.cos(slopeAngle)*newDistancePerUnitTime; 
+		yIncrement = Math.sin(slopeAngle)*newDistancePerUnitTime;
+		xMax-=50;
+	}
+	if (rise < 0){ yMax += 50; } else { yMax -=50; }
+	testMovement(0, newPath); //(run < 0), (rise < 0)
+}
+
+</script>
+</head>
+
+<body onclick="newMove(event)">
+	<div class="person" id="thePerson">
+		<img src="./images/Battlecruiser_SC2_Rend1.jpg">
+	</div>
+</body>
+</html>

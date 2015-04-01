@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>Sigma Alpha Epsilon</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="Lewis Ritz" content="">
+<link rel="shortcut icon" href="images/favicon2.ico" type="image/x-icon">
+<link rel="icon" href="images/favicon2.ico" type="image/x-icon">
+
+	<!-- JavaScript 
+	================================================== -->
+	<!-- JQuery -->
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<!-- <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>  -->
+
+	<!-- PageScripts -->
+	<script type="text/javascript" src="js/mainPageScripts.js"></script>
+
+	<!-- Google API -->
+	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+	<!--
+	<script type="text/javascript" onload="thingLoaded" src="js/googleCalendarApiPageScript.js"></script>
+	-->
+
+	<!-- Function Passing Tests -->
+	<script type="text/javascript" src="js/funtPassingTest.js"></script>
+
+	<!-- JQuery-Calendar -->
+	<script type="text/javascript" src="js/jquery.calendar.js"></script>
+	<link rel="stylesheet" media="screen" href="js/jquery.calendar.css"/>
+	<script type="text/javascript" src="js/events_random.js"></script>
+	<script type="text/javascript" src="js/calendarEvents.js"></script>
+	<!--
+	<script type="text/javascript" src="js/calendarPageScript.js"></script>
+	-->
+
+	<!-- AgileCarousel -->
+	<script src="Agile-Carousel-master/agile_carousel.a1.1.js"></script>
+  	<script src="js/agileCarouselPageScript.js"></script>
+
+
+	<!-- CSS
+  ================================================== -->
+
+  <!-- AgileCarousel -->
+	<link rel="stylesheet" href="Agile-Carousel-master/agile_carousel.css" type='text/css'>
+
+	<!-- jqueryCalendar -->
+	<link rel="stylesheet" href="styles/jQueryCalendarPageStyles.css" type="text/css">
+	
+	<!-- Page Styles -->
+	<link rel="stylesheet" href="styles/mainPageStyles.css" type="text/css">
+
+	<!-- Google Analitics
+  ================================================== -->
+	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-50249918-1', 'wcupasae.com');
+  ga('send', 'pageview');
+
+</script>
+</head>
+
+<body>
+	<!--
+	<div id="inputStuff"></div>
+-->
+	<div class="NavBar">
+  		<div class="headerWrapper">
+  			<div id="MainIcon">
+	  			<div class="image">
+	  				<img src="images/Fleur-de-lis.gif">
+	  			</div>
+				<h1 onmouseover="logoRollon(this)" onmouseout="logoRolloff(this)" >West Chester University Of Pennsylvania</h1>
+			</div>
+			<div class="NavContainer">
+				<div class="topSpan">
+					
+					<h3 id="NavAbout" onmouseover="NavBarRollon(this)" onmouseout="NavBarRolloff(this)">About</h3>
+					<!-- <h3 id="NavResources" onmouseover="NavBarRollon(this)" onmouseout="NavBarRolloff(this)">Resources</h3> -->
+					<h3 id="NavEvents" onmouseover="NavBarRollon(this)" onmouseout="NavBarRolloff(this)">Events</h3>
+					<h3 id="NavNews" onmouseover="NavBarRollon(this)" onmouseout="NavBarRolloff(this)">News</h3>
+					<h3 id="NavRush" onmouseover="NavBarRollon(this)" onmouseout="NavBarRolloff(this)">Rush</h3>
+					<h3 id="NavContact" onmouseover="NavBarRollon(this)" onmouseout="NavBarRolloff(this)">Contact</h3>
+					<h5 onmouseover="NavBarRollon(this)" onmouseout="NavBarRolloff(this)" onclick="loginShowHide()">Login</h5>
+				</div>
+				<div class="bottomSpan">
+					<h2>Sigma Alpha Epsilon</h2>
+				</div>
+				<form action="/login" method="post">
+					<div class="loginArea" id="loginArea">
+						<input type="text" name="firstname" value="username">
+						<input type="password" name="firstname" value="">
+						<div class="extraButtons">
+							<h5 onmouseover="NavBarRollon(this)" onmouseout="NavBarRolloff(this)">Go</h5>
+							<h5 onmouseover="NavBarRollon(this)" onmouseout="NavBarRolloff(this)">Forgot</h5>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+  	</div>
+  	<div class="MainBodyContent" id="FrontPageContent">
+  		<div class="bufferTop" id="IconTop"></div>
+  		<div class="ImageDisplay">
+  			<div class="slideshow_wrapper">  
+			     <div class="slideshow" id="basic_slideshow">
+			     </div>
+			 </div>
+	  	</div>
+  		<div class="PageTitle" id="About"><h2>About Us</h2></div>
+	  	<div class="PageContent">
+	  		<h1>SAE Facts</h1>
+	  		<h3 class="minimizeTopMargin">
+		  		<ul>
+		  			<li>Approximately 80% of the top executives in Fortune 500 are fraternity men</li>
+		  			<li>71% of men listed in Who's Who in America are fraternity men</li>
+		  			<li>76% of the current United States Senators and Congressmen are fraternity men</li> 
+		  			<li>40 of the 47 Supreme Court Justices since 1910 have been fraternity men</li> 
+		  			<li>100 of the 158 cabinet members since 1900 have been fraternity men</li> 
+		  			<li>All but 3 United States Presidents since 1825 have been fraternity men</li> 
+		  			<li>SAE is the # 1 rated fraternity by the Gallup Poll</li> 
+		  			<li>SAE is the # 1 rated fraternity by the Heller Survey</li> 
+		  			<li>SAE has been the # 1 rated fraternity by Bantas for 35 years</li> 
+		  			<li>SAE has been rated the # 1 national fraternity for more than 53 years (out of 60) by the College Survey Bureau</li> 
+		  			<li>Out of the Forbes Super 500 list of America's largest corporations, SAE is tied for the most CEO's at nine</li> 
+		  			<li>SAE has the greatest number of initiates of any International Greek Letter at over 282,000 men (as of March 2008)</li>
+		  		</ul>
+	  		</h3>
+	  		<h1>Notable SAE Alumni</h1>
+	  		<h3 class="minimizeTopMargin">
+		  		<ul>
+		  			<li>William McKinley - 25th United States President.</li>
+		  			<li>Phil Jackson - NBA head coach of the Los Angeles Lakers, ten time NBA World Champion.</li>
+		  			<li>Charles Mooty - CEO of Dairy Queen.</li> 
+		  			<li>Troy Aikman - NFL quarterback for the Dallas Cowboys, three time Super Bowl Champion.</li> 
+		  			<li>Scott Ford - CEO of Alltel Wireless.</li> 
+		  			<li>Pete Carroll - Head coach of the USC Trojans football team, two time National Champion.</li> 
+		  			<li>Ed Wilson - President of Tribune Broadcasting. Former president of FOX, NBC, and CBS.</li> 
+		  			<li>William Perez - CEO of Wrigley. Former CEO of Nike Inc.</li> 
+		  			<li>Scott Boras - Professional athlete agent.</li> 
+		  			<li>SAE has been rated the # 1 national fraternity for more than 53 years (out of 60) by the College Survey Bureau</li> 
+		  			<li>William Faulkner - Noble Prize winning author.</li> 
+		  			<li>"Pistol Pete" Maravich - NBA Hall of Fame member.</li>
+		  			<li>Larry Kurzweil - President and COO of Universal Studios Hollywood.</li>
+		  		</ul>
+	  		</h3>
+	  		<h1>History</h1>
+	  		<h3>
+	  			Headquartered in Evanston, IL, Sigma Alpha Epsilon was founded on March 9th, 1856 at the University of Alabama Tuscaloosa.  It's founders were Noble Leslie Devotie, Nathan Elams Cockrell, John Barret Rudolph, John Webb Kerr, Samuel Marion Dennis, Wade Hampton Foster, Abner EdwinPatton, and Thomas Chappell Cook. Under the direction of Devotie, the ritual, secret hand grip, and the name was created. Today, over 307,000 brothers have been initiated into our realm. With over 228 chapters nation wide, there is roughly 14,000 current undergraduate brothers with over 190,000 living alumni as well. Sigma Alpha Epsilon is the biggest fraternity currently in the nation.
+	  		</h3>
+	  		<h3>
+	  			The Pennsylvania Tau Gamma Chapter of Sigma Alpha Epsilon began in the early fall of 2002 with the determination of one young man. Greg Brunner rounded up close to 40 gentlemen in the basement of Killinger Hall and began drafting what would be the original by-laws of the 10th fraternity at West Chester University. Greg Brunner, Brad Sorrells, and Matt Barraveccio were named president, vice president, and treasurer, respectively. The founding fathers yearned for a strong commitment to civility, loyalty, scholarship, and brotherhood and swore to not succumb to the pitfalls of other Greek Organizations.
+			</h3> 
+
+			<h3>
+				Pennsylvania Tau Gamma grew in popularity very quickly; they initiated the inaugural Alpha pledge class, consisting of 13 men, in Spring of 2003. The men of SAE continue striving to be academic, athletic, and respected role models at West Chester University. In April of 2004, the Pennsylvania Tau Gamma received their charter from the Sigma Alpha Epsilon Nationals and became the newest chapter at West Chester University. Subsequently, they were awarded the Greek Cup on campus in 2004 and Greg Brunner was named President of the Year. Currently, the Pennsylvania Tau Gamma has 17 initiated pledge classes, and is recruiting a rapidly growing pool of potential members.
+			</h3>
+			<h1>Philanthropy</h1>
+			<h3 class="minimizeTopMargin">Coming Soon...</h3>
+	  	</div>
+	  	<!--
+  		<div class="PageTitle" id="Resources"><h2>Resources</h2></div>
+  		<div class="ImageDisplay">
+	  	</div>
+	  	<div class="PageContent">
+	  		<h3>
+	  			Coming Soon...
+	  		</h3>
+	  	</div>
+	  	-->
+  		<div class="PageTitle" id="Events"><h2>Events</h2>
+  		</div>
+  		<div class="PageContent">
+  			<div class="EventNav">
+  				<h3 onmouseover="NavBarRollon(this)" onmouseout="NavBarRolloff(this)" onclick="upcomingEventsButton()">Upcoming Events</h3>
+  				<h3 onmouseover="NavBarRollon(this)" onmouseout="NavBarRolloff(this)" onclick="pastEventsButton()">Past Events</h3>
+  			</div>
+	  		<div class="CalendarJQ" id="OutWrapperLEW">
+				<div>
+					<div id="controls">
+						<!--
+						<ol id="cals">
+							<li><button name="day">Day</button></li>
+							<li class="on"><button name="week">Week</button></li>
+							<li><button name="month">Month</button></li>
+							<li><button name="year">Year</button></li>
+						</ol>
+						-->
+						<h1 id="date_head"></h1>
+						<ol id="nav">
+							<li><button name="prev">Previous</button></li>
+							<li class="on"><button name="today">Today</button></li>
+							<li><button name="next">Next</button></li>
+						</ol>
+					</div>
+					<!-- <div id="calendar1"></div> -->
+					<div id="calendar"></div>
+				</div>
+			</div>
+		</div>
+  		<div class="PageTitle" id="News"><h2>News</h2></div>
+  		<div class="ImageDisplay">
+	  	</div>
+	  	<div class="PageContent">
+	  		<div class="ArticleWrapper">
+	  			<div class="ArticleSelectRollover" onmouseover="ShowTransparency(this)" onmouseout="HideTransparency(this)">
+	  				<h3>Click To View Full Article</h3>
+	  			</div>
+	  			<div class="Header">
+	  				<h3>WCU honors group raises money for hunger in Africa</h3>
+	  				<p>April 13, 2014</p>
+	  				<p>Author: Kendal Gapinski, Daily Local News</p>
+	  			</div>
+	  			<div class="Content">
+	  				<p>
+	  					The Honors Student Association at West Chester University announced that it had raised more than $11,000 during its ninth annual Aid to South Africa event.
+	  				</p><p>
+	  					The event featured musical performances, carnival games, raffle prizes, food, jousting, a dunk tank and many other activities, the association said.
+	  				</p>
+	  					<img src="/images/EP-140419897.jpg">
+	  				<p>
+	  					“The event was spectacular,” Assistant Director and honors sophomore, Emily Roth added. “The weather turned out perfect, and we couldn’t ask for more hard working volunteers.”
+	  				</p><p>
+	  					The Honors Student Association is a campus organization that focuses on service and leadership development, according to the university. It has approximately 180 active members.
+	  				</p>
+	  				<a href="http://www.dailylocal.com/general-news/20140413/wcu-honors-group-raises-money-for-hunger-in-africa" target="_blank">link to article</a>
+	  				<div class="bottomPadding"></div>
+	  			</div>
+	  		</div>
+	  		<div class="ArticleWrapper">
+	  			<div class="ArticleSelectRollover" onmouseover="ShowTransparency(this)" onmouseout="HideTransparency(this)">
+	  				<h3>Click To View Full Article</h3>
+	  			</div>
+	  			<div class="Header">
+	  				<h3>Ice Cream and Peas: Autism Awareness in April</h3>
+	  				<p>MARCH 25, 2014</p>
+	  			</div>
+	  			<div class="Content">
+	  				<p>
+	  					Families with children on the autism spectrum are familiar with "the beige diet," in which the child picks foods to eat based on their color.
+	  				</p><p>
+	  					It's estimated that 80% of individuals with developmental disabilities and more than 45% of typically developing children have some type of feeding problem.
+	  				</p>
+	  					<img src="/images/april-is-autism-awareness-month1.png">
+	  				<p>
+	  					SPARC is a nonprofit teaching clinic so West Chester undergraduate and graduate students from psychology, special education, and communicative disorders programs serve as student therapists, peer mentors and volunteers, gaining valuable training in the field of autism and behavior analysis.
+	  				</p><p>
+	  					We have a number of different types of opportunities available to students. They range from volunteer opportunities to practicum experiences to paid positions.
+	  				</p>
+	  				<a href="http://www.wcupa.edu/pr/2014/03.25autism.asp" target="_blank">link to article</a>
+	  				<div class="bottomPadding"></div>
+	  			</div>	
+	  		</div>
+	  		<div class="ArticleWrapper">
+	  			<div class="ArticleSelectRollover" onmouseover="ShowTransparency(this)" onmouseout="HideTransparency(this)">
+	  				<h3>Click To View Full Article</h3>
+	  			</div>
+	  			<div class="Header">
+	  				<h3>Junior Named PA Army National Guard Soldier of the Year</h3>
+	  				<p>APRIL 17, 2014</p>
+	  			</div>
+	  			<div class="Content">
+	  				<p>
+	  					Antonio D'Alessandro bested seven other contenders who, like him, had achieved top standing at preceding levels ­-- company, battalion, brigade -- to claim the state title.
+	  				</p>
+	  					<img src="/images/soldieroftheyear.jpg">
+	  				<p>
+	  					"This means a lot to me personally as I worked and studied very hard to achieve this honor," he said. "I attribute my success in large part to the leadership and mentoring, physical and mental, of West Chester's ROTC program and my Army National Guard Unit, Bravo Company 1/111th Infantry Regiment."
+	  				</p>
+	  				<a href="http://www.wcupa.edu/pr/2014/04.17soldieroftheyear.asp" target="_blank">link to article</a>
+	  				<div class="bottomPadding"></div>
+	  			</div>
+	  			
+	  		</div>
+	  		<h3>
+	  			<!-- 
+	  			<iframe src="https://www.google.com/calendar/embed?src=d2r7ns1jir1i2bfjr3ujapkmfo%40group.calendar.google.com&ctz=America/New_York" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe> -->
+	  		</h3>
+	  	</div>
+  		<div class="PageTitle" id="Rush"><h2>Rush</h2></div>
+  		<div class="ImageDisplay">
+	  	</div>
+	  	<div class="PageContent">
+	  		<h1>Recruitment</h1>
+	  		<h3>
+	  			<b>True Friendship. </b><br /><small>The men you meet will be the ones who stick around for life. They understand you. They support you. That's bonding at its best. Have no doubt that once you're part of this circle of friends, they'll always be there for you. Welcome to your new family.</small>
+	  		</h3>
+	  		<h3>
+				<b>True Connections. </b><br /><small> You're working toward a career. You need connections. We have solutions. Like the largest collection of networking tools that put you in touch with more than 180,000 alumni. Our membership is your opportunity.</small>
+			</h3>
+			<h3>
+				<b>True Scholarship. </b><br /><small> Your education is the key to your future. You have a burning desire to excel. Our scholarships, loans and tutoring can take you to the next level. Follow your dreams. Be a distinguished scholar at graduation.</small>
+			</h3>
+			<h3>
+				<b>True Sportsmanship. </b><br /><small> Sometimes you want to throw the ball around. Sometimes you want to compete. Either way, brothers know how to rally for a game. Remind them of past glory. Challenge yourself to win and be a good sport. You're in the game together.</small>
+			</h3>
+			<h3>
+				<b>True Service. </b><br /><small> You want to give back to your community. To your neighbors. It's a smile on the face of someone who says, "Thank you." They need role models. You have the potential to do something good.</small>
+			</h3>
+			<h3>
+				<b>True Experience. </b><br /><small> You'll never want to leave college, so make the most of it. Make that experience the best it can be with a group of friends you'll always remember. Go out. Hang out. These are the days you'll talk about for years to come.</small>
+			</h3>
+			<h3>
+				<b>True Integrity. </b><br /><small> Sometimes to stand out in a crowd, you need to have integrity. You want friends who share common beliefs, goals and ideals. But it's important for your experiences to be your own. Make a name for yourself.</small>
+			</h3>
+			<h3>
+				<b>True Gentleman .</b><br /><small> The True Gentleman is the man whose conduct proceeds from good will and an acute sense of propriety, and whose self-control is equal to all emergencies; who does not make the poor man conscious of his poverty, the obscure man of his obscurity, or any man of his inferiority or deformity; who is himself humbled if necessity compels him to humble another; who does not flatter wealth, cringe before power, or boast of his own possessions or achievements; who speaks with frankness but always with sincerity and sympathy; whose deed follows his word; who thinks of the rights and feelings of others, rather than his own; and who appears well in any company, a man with whom honor is sacred and virtue safe. -John Walter Wayland</small>
+	  		</h3>
+	  		<h1>How To Rush</h1>
+	  		<h3>Coming Soon..</h3>
+	  	</div>
+	  	<div class="PageTitle" id="Contact"><h2>Contact</h2></div>
+  		<div class="ImageDisplay">
+	  	</div>
+	  	<div class="PageContent">
+	  		<h3>
+	  			Email Us Today: brothers@wcupaSAE.com
+	  			<div id="inputStuff">
+
+	  			</div>
+	  		</h3>
+	  	</div>
+	</div>
+	<div class="MainBodyContent" id="PastEventsPageContent">
+		<div class="bufferTop" id="IconTop"></div>
+		<div class="PageTitle"><h2>Past Events</h2></div>
+
+	</div>
+	<div class="MainBodyContent" id="UpcomingEventsPageContent">
+		<div class="bufferTop" id="IconTop"></div>
+		<div class="PageTitle"><h2>Upcoming Events</h2></div>
+
+	</div>
+</body>
+</html>
